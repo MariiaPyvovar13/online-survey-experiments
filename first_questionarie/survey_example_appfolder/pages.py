@@ -9,11 +9,11 @@ from .models import Constants, Player
 
 class Welcome(Page):
     form_model = Player
-    form_fields = ['entry_question']
+    form_fields = ["entry_question"]
 
 class DemoPage(Page):
     form_model = Player
-    form_fields = ['age_question']
+    form_fields = ["age_question", "study_field", "rating", "agreemen_quest"]
 
 class EndPage(Page):
     #style: this is a good example of the style 'CamelCase' that one normally uses for classes

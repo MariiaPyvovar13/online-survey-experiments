@@ -7,12 +7,15 @@
 
 {% block content %}
 <br>
-<h2> Survey Example </h2>
+<h2> Survey Questions </h2>
     <hr>
-    This is a demo page
+    Answer the following questions, please.
 
     <!-- This is the most basic way of implementing an input field -->
     {{ formfield "age_question"}}
+    {{ formfield "study_field"}}
+    {{ formfield "rating"}} 
+    {{ formfield "agreemen_quest"}}
 
    <button class="otree-btn-next btn btn-primary next-button otree-next-button">
     Next
