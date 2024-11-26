@@ -21,8 +21,8 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
     def creating_session(self):
         img_and_question = [
-            {"image": "_static/img1.png", "question": "What emotions does this sunset evoke in you?"},
-            {"image": "_static/img1.jpg", "question": "Have you ever seen this place?"}
+            {"image": "_static/img1.png", "question": "What emotdasdasions does this sunset evoke in you?"},
+            {"image": "_static/img1.jpg", "question": "Have you edjaldver seen this place?"}
         ]
         for p in self.get_players():
             # Randomly assign one image and its question to each player
@@ -64,6 +64,8 @@ class Player(BasePlayer):
     selected_image = models.StringField()
     image_question = models.StringField()
     image_response = models.LongStringField(label="Your response", required=True)
+    print(models)
+
     emotion_choice = models.StringField(
         label="What emotion does this image evoke in you?",
         choices=["Peace", "Happiness", "Sadness", "Excitement", "Other"],

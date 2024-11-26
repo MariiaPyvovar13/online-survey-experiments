@@ -7,9 +7,4 @@
     <!-- Display the image based on the player's selected image -->
     <img src="{{ player.selected_image }}" alt="Image" style="width: 100%; height: auto;">
 
-    <form method="post">
-        {{ formfield(player.selected_answer) }}  <!-- Collect answer for the question -->
-        <button type="submit">Next</button>
-    </form>
-
 {% endblock %}

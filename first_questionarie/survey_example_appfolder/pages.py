@@ -20,17 +20,12 @@ class ImagePage(Page):
     form_model = Player
     form_fields = ["emotion_choice", "image_response"]
 
-    def vars_for_template(player: 'Player'):
-        return {
-            "image_url": player.selected_image,
-            "image_question": player.image_question
-        }
 
 class PopoutPage(Page):
     form_model = Player
     form_fields = ["popout_response", "time_popout"]
 
-    def before_next_page(player: "Player", timeout_happened):
+    def before_next_page(player: Player, timeout_happened):
         player.time_popout_end = "Recorded when user submits the page"
 
     def vars_for_template(player: "Player"):
