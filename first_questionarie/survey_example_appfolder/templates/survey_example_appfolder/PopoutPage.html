@@ -1,24 +1,12 @@
 {% extends "global/Page.html" %}
-{% load otree static %}
+{% load otree %}
 
+{% block app_scripts %}
 
-{% block title %}
-{% endblock %}
-
-{% block content %}
-<br>
-<h2> Survey Questions </h2>
-    <hr>
-    Answer the following questions, please.
-
-    <!-- This is the most basic way of implementing an input field -->
-    {{ formfield "age_question"}}
-    {{ formfield "study_field"}}
-    {{ formfield "rating"}} 
-    {{ formfield "agreemen_quest"}}
-
-   <button class="otree-btn-next btn btn-primary next-button otree-next-button">
-    Next
-</button>
-
+<script>
+    // TIME: we are going to write the time the participant entered the page to a variable
+    var time = new Date(); //creates the current time
+    var time = time.toISOString(); //to.ISOString() ensures we get miliseconds
+    document.getElementById('time_popout').value = time;
+</script>
 {% endblock %}

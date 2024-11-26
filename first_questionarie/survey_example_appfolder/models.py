@@ -8,6 +8,7 @@ from otree.api import (
     Currency as c,
     currency_range,
 )
+import random
 
 author = 'your names and team objective go here'
 doc = 'Your app description goes here'
@@ -26,7 +27,7 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             # Randomly assign one image and its question to each player
             selected = random.choice(img_and_question)
-            p.selected_image = selected["url"]
+            p.selected_image = selected["image"]
             p.image_question = selected["question"]
 
 class Group(BaseGroup):
@@ -71,8 +72,7 @@ class Player(BasePlayer):
 
     # Popout question
     popout_response = models.StringField(blank=True, label="Your response")
-    time_popout_start = models.StringField(initial="-999")
-    time_popout_end = models.StringField(initial="-999")
+    time_popout = models.StringField(initial="")
 
     # Screen size
     screen_width = models.IntegerField(initial=-999, label="Screen width")

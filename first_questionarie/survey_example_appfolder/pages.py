@@ -28,7 +28,7 @@ class ImagePage(Page):
 
 class PopoutPage(Page):
     form_model = Player
-    form_fields = ["question_response"]
+    form_fields = ["popout_response", "time_popout"]
 
     def before_next_page(player: "Player", timeout_happened):
         player.time_popout_end = "Recorded when user submits the page"
@@ -54,5 +54,5 @@ class EndPage(Page):
 page_sequence = [Welcome,
                 DemoPage,
                 ImagePage,
-                PopoutQuestionPage,
+                PopoutPage,
                 EndPage]

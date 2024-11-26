@@ -1,24 +1,15 @@
 {% extends "global/Page.html" %}
-{% load otree static %}
-
-
-{% block title %}
-{% endblock %}
+{% load otree %}
 
 {% block content %}
-<br>
-<h2> Survey Questions </h2>
-    <hr>
-    Answer the following questions, please.
+    <h3>{{ player.image_question }}</h3>
 
-    <!-- This is the most basic way of implementing an input field -->
-    {{ formfield "age_question"}}
-    {{ formfield "study_field"}}
-    {{ formfield "rating"}} 
-    {{ formfield "agreemen_quest"}}
+    <!-- Display the image based on the player's selected image -->
+    <img src="{{ player.selected_image }}" alt="Image" style="width: 100%; height: auto;">
 
-   <button class="otree-btn-next btn btn-primary next-button otree-next-button">
-    Next
-</button>
+    <form method="post">
+        {{ formfield(player.selected_answer) }}  <!-- Collect answer for the question -->
+        <button type="submit">Next</button>
+    </form>
 
 {% endblock %}
