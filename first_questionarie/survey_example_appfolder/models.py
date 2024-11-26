@@ -18,7 +18,16 @@ class Constants(BaseConstants):
     num_rounds = 1
 
 class Subsession(BaseSubsession):
-    pass
+    def creating_session(self):
+        img_and_question = [
+            {"image": "_static/img1.png", "question": "What emotions does this sunset evoke in you?"},
+            {"image": "_static/img1.jpg", "question": "Have you ever seen this place?"}
+        ]
+        for p in self.get_players():
+            # Randomly assign one image and its question to each player
+            selected = random.choice(img_and_question)
+            p.selected_image = selected["url"]
+            p.image_question = selected["question"]
 
 class Group(BaseGroup):
     #we will only come to the group class when we look at advanced methods
@@ -49,4 +58,25 @@ class Player(BasePlayer):
     agreemen_quest = models.BooleanField(label="Do you agree that your answers will be used in future research?",
                                          choices=[(True, "Yes"), (False, "No")],
                                          required=True)
+
+    # Selecting image
+    selected_image = models.StringField()
+    image_question = models.StringField()
+    image_response = models.LongStringField(label="Your response", required=True)
+    emotion_choice = models.StringField(
+        label="What emotion does this image evoke in you?",
+        choices=["Peace", "Happiness", "Sadness", "Excitement", "Other"],
+        required=True
+    )
+
+    # Popout question
+    popout_response = models.StringField(blank=True, label="Your response")
+    time_popout_start = models.StringField(initial="-999")
+    time_popout_end = models.StringField(initial="-999")
+
+    # Screen size
+    screen_width = models.IntegerField(initial=-999, label="Screen width")
+    screen_height = models.IntegerField(initial=-999, label="Screen height")
+
+
 
