@@ -21,14 +21,15 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
     def creating_session(self):
         img_and_question = [
-            {"image": "_static/img1.png", "question": "What emotdasdasions does this sunset evoke in you?"},
-            {"image": "_static/img1.jpg", "question": "Have you edjaldver seen this place?"}
+            {"image": "img1.png", "question": "What emotions does this sunset evoke in you?", "choices": ["Peace", "Happiness", "Sadness", "Excitement", "Other"]},
+            {"image": "img2.png", "question": "Have you ever seen this place?", "choices": ["Yes", "No"]}
         ]
         for p in self.get_players():
             # Randomly assign one image and its question to each player
-            selected = random.choice(img_and_question)
-            p.selected_image = selected["image"]
-            p.image_question = selected["question"]
+            selected = random.choice(img_and_question) # Randomly assign one image
+            p.selected_image = selected["image"]  # Assign the selected image to the player
+            p.image_question = selected["question"]  # Assign the corresponding question
+            p.choices = selected["choices"]  # Assign the choices for the popout question
 
 class Group(BaseGroup):
     #we will only come to the group class when we look at advanced methods
@@ -63,14 +64,28 @@ class Player(BasePlayer):
     # Selecting image
     selected_image = models.StringField()
     image_question = models.StringField()
-    image_response = models.LongStringField(label="Your response", required=True)
-    print(models)
 
-    emotion_choice = models.StringField(
+    popout_reason = models.StringField(
         label="What emotion does this image evoke in you?",
         choices=["Peace", "Happiness", "Sadness", "Excitement", "Other"],
-        required=True
+        blank=True
     )
+
+    popout_question = models.StringField(
+        label="Have you ever seen this place?",
+        choices=["Yes", "No"],
+        blank=True
+    )
+    more_experience = models.StringField(
+        label="Great! Can you tell us more about your experience?",
+        blank=True
+    )
+
+    consider_visited = models.StringField(
+        label="It’s beautiful, isn’t it? Have you considered visiting?",
+        blank=True
+    )
+
 
     # Popout question
     popout_response = models.StringField(blank=True, label="Your response")

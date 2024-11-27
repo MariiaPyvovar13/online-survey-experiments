@@ -2,9 +2,10 @@
 {% load otree %}
 
 {% block content %}
-    <h3>{{ player.image_question }}</h3>
-
-    <!-- Display the image based on the player's selected image -->
-    <img src="{{ player.selected_image }}" alt="Image" style="width: 100%; height: auto;">
-
+<h2>{{ player.image_question }}</h2>
+  <img alt="image" width="50%" height="50%" src="{% static player.selected_image %}" />
+  <!-- Display other form fields for the ImagePage here -->
+  <button class="otree-btn-next btn btn-primary next-button otree-next-button">
+      Next
+  </button>
 {% endblock %}

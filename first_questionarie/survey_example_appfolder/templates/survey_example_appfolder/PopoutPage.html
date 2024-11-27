@@ -1,9 +1,72 @@
 {% extends "global/Page.html" %}
 {% load otree %}
+{% block content %}
+  {% if player.selected_image == "img1.png" %}
+      <h2>What emotions does this image evoke in you?</h2>
+      {{ formfield "popout_reason" }} <!-- Dropdown or radio buttons -->
 
+      <!-- "Why?" field initially hidden -->
+      <div id="why-field" style="display: none;">
+          <h3>Why?</h3>
+          {{ formfield "popout_response" }}
+      </div>
+
+  {% elif player.selected_image == "img2.png" %}
+    <h2>Have you ever seen this place?</h2>
+    {{ formfield "popout_question" }}
+
+    {% if player.popout_response == "Yes" %}
+      <h3>Great! Can you tell us more about your experience?</h3>
+      {{ formfield "more_experience" }}
+      {{ formfield_errors "more_experience" }}
+
+    {% elif player.popout_response == "No" %}
+      <h3>It’s beautiful, isn’t it? Have you considered visiting?</h3>
+      {{ formfield "consider_visited" }}
+      {{ formfield_errors "consider_visited" }}
+    {% endif %}
+  {% endif %}
+</div>
+
+    <input type="submit" class="btn btn-primary" value="Submit">
+</div>
+{% endblock %}
 {% block app_scripts %}
 
 <script>
+// Dynamically show the "Why?" field when an emotion is selected
+    document.addEventListener("DOMContentLoaded", function () {
+        const emotionChoices = document.querySelectorAll('input[name="popout_reason"]'); // Adjust to match the field name
+
+        if (emotionChoices) {
+            emotionChoices.forEach(choice => {
+                choice.addEventListener("change", function () {
+                    const whyField = document.getElementById("why-field");
+                    whyField.style.display = "block"; // Show the "Why?" field for any choice
+                });
+            });
+        }
+    });
+
+      // Show Yes/No-specific questions for img2.png
+  const popoutQuestion = document.querySelector('[name="popout_question"]');
+  if (popoutQuestion) {
+    popoutQuestion.addEventListener("change", function () {
+      const yesField = document.getElementById("yes-field");
+      const noField = document.getElementById("no-field");
+
+      if (this.value === "Yes") {
+        yesField.style.display = "block";
+        noField.style.display = "none";
+      } else if (this.value === "No") {
+        noField.style.display = "block";
+        yesField.style.display = "none";
+      } else {
+        yesField.style.display = "none";
+        noField.style.display = "none";
+      }
+    });
+  }
     // TIME: we are going to write the time the participant entered the page to a variable
     var time = new Date(); //creates the current time
     var time = time.toISOString(); //to.ISOString() ensures we get miliseconds

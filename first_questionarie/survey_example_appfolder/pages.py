@@ -18,12 +18,23 @@ class DemoPage(Page):
 
 class ImagePage(Page):
     form_model = Player
-    form_fields = ["emotion_choice", "image_response"]
+    def get_form_fields(player: Player):
+        if player.selected_image == 'img1.png':
+            return ['popout_reason']  # Dropdown for emotions
+        else:
+            return ['popout_question']  # Yes/No question for img2
+
 
 
 class PopoutPage(Page):
     form_model = Player
-    form_fields = ["popout_response", "time_popout"]
+    def get_form_fields(player: Player):
+        if player.selected_image == "img1.png":
+            return ["popout_reason", "popout_response"]  # Dropdown + Why
+        elif player.selected_image == "img2.png" and player.popout_question == 'Yes':
+            return ["popout_question", "more_experience"]  # Yes + follow-up
+        elif player.selected_image == "img2.png" and player.popout_question == 'No':
+            return ["popout_question", "consider_visited"]  # No + follow-up
 
     def before_next_page(player: Player, timeout_happened):
         player.time_popout_end = "Recorded when user submits the page"
