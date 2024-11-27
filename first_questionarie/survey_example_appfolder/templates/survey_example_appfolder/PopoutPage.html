@@ -1,15 +1,16 @@
 {% extends "global/Page.html" %}
 {% load otree %}
+
 {% block content %}
   {% if player.selected_image == "img1.png" %}
-      <h2>What emotions does this image evoke in you?</h2>
-      {{ formfield "popout_reason" }} <!-- Dropdown or radio buttons -->
+    <h2>What emotions does this image evoke in you?</h2>
+    {{ formfield "popout_reason" }}  <!-- Dropdown for emotions -->
 
-      <!-- "Why?" field initially hidden -->
-      <div id="why-field" style="display: none;">
-          <h3>Why?</h3>
-          {{ formfield "popout_response" }}
-      </div>
+    <!-- "Why?" field initially hidden -->
+    <div id="why-field" style="display: none;">
+        <h3>Why?</h3>
+        {{ formfield "popout_response" }}  <!-- Question asking why -->
+    </div>
 
   {% elif player.selected_image == "img2.png" %}
     <h2>Have you ever seen this place?</h2>
@@ -31,25 +32,25 @@
     <input type="submit" class="btn btn-primary" value="Submit">
 </div>
 {% endblock %}
+
 {% block app_scripts %}
 
 <script>
-// Dynamically show the "Why?" field when an emotion is selected
-    document.addEventListener("DOMContentLoaded", function () {
-        const emotionChoices = document.querySelectorAll('input[name="popout_reason"]'); // Adjust to match the field name
-
-        if (emotionChoices) {
-            emotionChoices.forEach(choice => {
-                choice.addEventListener("change", function () {
-                    const whyField = document.getElementById("why-field");
-                    whyField.style.display = "block"; // Show the "Why?" field for any choice
-                });
-            });
-        }
+  // Show "Why?" field for img1.png when a selection is made in the "popout_reason" dropdown
+  const popoutReason = document.querySelector('[name="popout_reason"]');
+  if (popoutReason) {
+    popoutReason.addEventListener("change", function () {
+      const whyField = document.getElementById("why-field");
+      if (this.value) {
+        whyField.style.display = "block";  // Show "Why?" field when a choice is selected
+      } else {
+        whyField.style.display = "none";   // Hide "Why?" field if no choice is selected
+      }
     });
+  }
 
-      // Show Yes/No-specific questions for img2.png
-  const popoutQuestion = document.querySelector('[name="popout_question"]');
+  // Show Yes/No-specific questions for img2.png
+  const popoutQuestion = document.querySelector("[name="popout_question"]");
   if (popoutQuestion) {
     popoutQuestion.addEventListener("change", function () {
       const yesField = document.getElementById("yes-field");
@@ -67,9 +68,10 @@
       }
     });
   }
+
     // TIME: we are going to write the time the participant entered the page to a variable
     var time = new Date(); //creates the current time
     var time = time.toISOString(); //to.ISOString() ensures we get miliseconds
-    document.getElementById('time_popout').value = time;
+    document.getElementById("time_popout").value = time;
 </script>
 {% endblock %}

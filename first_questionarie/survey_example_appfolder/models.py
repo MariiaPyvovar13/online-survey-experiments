@@ -89,6 +89,7 @@ class Player(BasePlayer):
     # Popout question
     popout_response = models.StringField(blank=True, label="Your response")
     time_popout = models.StringField(initial="")
+    time_popout_end = models.StringField()
 
     # Screen size
     screen_width = models.IntegerField(initial=-999, label="Screen width")

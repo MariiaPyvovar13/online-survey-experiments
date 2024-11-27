@@ -18,29 +18,36 @@ class DemoPage(Page):
 
 class ImagePage(Page):
     form_model = Player
-    def get_form_fields(player: Player):
-        if player.selected_image == "img1.png":
+    def get_form_fields(self):
+        if self.player.selected_image == "img1.png":
             return ["popout_reason"]  # Dropdown for emotions
         else:
             return ["popout_question"]  # Yes/No question for img2
 
 
+
 class PopoutPage(Page):
     form_model = Player
-    def get_form_fields(player: Player):
-        if player.selected_image == "img1.png":
-            return ["popout_reason", "popout_response"]  # Dropdown + Why
-        elif player.selected_image == "img2.png" and player.popout_question == 'Yes':
-            return ["popout_question", "more_experience"]  # Yes + follow-up
-        elif player.selected_image == "img2.png" and player.popout_question == 'No':
-            return ["popout_question", "consider_visited"]  # No + follow-up
 
-    def before_next_page(player: Player, timeout_happened):
-        player.time_popout_end = "Recorded when user submits the page"
+    def get_form_fields(self):
+        # Since we're using staticmethod, we no longer need 'self'.
+        if self.player.selected_image == "img1.png":
+            return ["popout_reason", "popout_response"]
+        elif self.player.selected_image == "img2.png":
+            if self.player.popout_question == "Yes":
+                return ["popout_question", "more_experience"]
+            elif self.player.popout_question == "No":
+                return ["popout_question", "consider_visited"]
+        return []
 
-    def vars_for_template(player: "Player"):
+
+    def before_next_page(self):
+        self.player.time_popout_end = "Recorded when user submits the page"
+
+    def vars_for_template(self):
         return {
-            "popout_instruction": "Please interact with the popout question before proceeding."
+            'selected_image': self.player.selected_image,
+            'popout_instruction': "Please interact with the popout question before proceeding."
         }
 
 class ScreenSizePage(Page):
