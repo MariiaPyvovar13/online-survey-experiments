@@ -86,7 +86,6 @@ class Player(BasePlayer):
         blank=True
     )
 
-
     # Popout question
     popout_response = models.StringField(blank=True, label="Your response")
     time_popout = models.StringField(initial="")

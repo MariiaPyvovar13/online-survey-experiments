@@ -19,11 +19,10 @@ class DemoPage(Page):
 class ImagePage(Page):
     form_model = Player
     def get_form_fields(player: Player):
-        if player.selected_image == 'img1.png':
-            return ['popout_reason']  # Dropdown for emotions
+        if player.selected_image == "img1.png":
+            return ["popout_reason"]  # Dropdown for emotions
         else:
-            return ['popout_question']  # Yes/No question for img2
-
+            return ["popout_question"]  # Yes/No question for img2
 
 
 class PopoutPage(Page):
