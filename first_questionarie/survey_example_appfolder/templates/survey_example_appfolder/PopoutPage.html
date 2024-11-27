@@ -4,24 +4,29 @@
 {% block content %}
   {% if player.selected_image == "img1.png" %}
     <h2>What emotions does this image evoke in you?</h2>
-    {{ formfield "popout_reason" }}  <!-- Dropdown for emotions -->
+    {{ formfield "popout_reason" }}
+    <!-- Display the error message for popout_reason -->
+    {{ formfield_errors "popout_reason" }}
 
     <!-- "Why?" field initially hidden -->
     <div id="why-field" style="display: none;">
         <h3>Why?</h3>
         {{ formfield "popout_response" }}  <!-- Question asking why -->
+        {{ formfield_errors "popout_response" }}
     </div>
 
   {% elif player.selected_image == "img2.png" %}
     <h2>Have you ever seen this place?</h2>
     {{ formfield "popout_question" }}
+    {{ formfield_errors "popout_question" }}
 
-    {% if player.popout_response == "Yes" %}
+
+  {% if player.popout_question == "Yes" %}
       <h3>Great! Can you tell us more about your experience?</h3>
       {{ formfield "more_experience" }}
       {{ formfield_errors "more_experience" }}
 
-    {% elif player.popout_response == "No" %}
+  {% elif player.popout_question == "No" %}
       <h3>It’s beautiful, isn’t it? Have you considered visiting?</h3>
       {{ formfield "consider_visited" }}
       {{ formfield_errors "consider_visited" }}
@@ -29,15 +34,14 @@
   {% endif %}
 </div>
 
-    <input type="submit" class="btn btn-primary" value="Submit">
+<input type="submit" class="btn btn-primary" value="Submit">
 </div>
 {% endblock %}
 
 {% block app_scripts %}
-
 <script>
   // Show "Why?" field for img1.png when a selection is made in the "popout_reason" dropdown
-  const popoutReason = document.querySelector('[name="popout_reason"]');
+  const popoutReason = document.querySelector("[name="popout_reason"]");
   if (popoutReason) {
     popoutReason.addEventListener("change", function () {
       const whyField = document.getElementById("why-field");
@@ -47,6 +51,12 @@
         whyField.style.display = "none";   // Hide "Why?" field if no choice is selected
       }
     });
+  }
+
+  // Ensure the "Why?" field is displayed when the page loads if the user has already selected a reason
+  const initialPopoutReason = popoutReason ? popoutReason.value : '';
+  if (initialPopoutReason) {
+    document.getElementById("why-field").style.display = "block";  // Show it if the user has already made a choice
   }
 
   // Show Yes/No-specific questions for img2.png

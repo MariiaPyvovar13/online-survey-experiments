@@ -31,6 +31,12 @@ class Subsession(BaseSubsession):
             p.image_question = selected["question"]  # Assign the corresponding question
             p.choices = selected["choices"]  # Assign the choices for the popout question
 
+            # Ensure popout_question is set based on selected_image
+            if p.selected_image == "img1.png":
+                p.popout_question = "What emotions does this image evoke in you?"
+            elif p.selected_image == "img2.png":
+                p.popout_question = "Have you ever seen this place?"
+
 class Group(BaseGroup):
     #we will only come to the group class when we look at advanced methods
     pass
@@ -68,14 +74,20 @@ class Player(BasePlayer):
     popout_reason = models.StringField(
         label="What emotion does this image evoke in you?",
         choices=["Peace", "Happiness", "Sadness", "Excitement", "Other"],
+        blank = True
+    )
+
+    popout_response = models.StringField(
+        label="Why?",
         blank=True
     )
 
     popout_question = models.StringField(
         label="Have you ever seen this place?",
         choices=["Yes", "No"],
-        blank=True
+        blank = True
     )
+
     more_experience = models.StringField(
         label="Great! Can you tell us more about your experience?",
         blank=True
@@ -87,7 +99,6 @@ class Player(BasePlayer):
     )
 
     # Popout question
-    popout_response = models.StringField(blank=True, label="Your response")
     time_popout = models.StringField(initial="")
     time_popout_end = models.StringField()
 

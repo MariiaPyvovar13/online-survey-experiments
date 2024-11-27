@@ -30,31 +30,33 @@ class PopoutPage(Page):
     form_model = Player
 
     def get_form_fields(self):
-        # Since we're using staticmethod, we no longer need 'self'.
+
         if self.player.selected_image == "img1.png":
             return ["popout_reason", "popout_response"]
         elif self.player.selected_image == "img2.png":
+            # Make sure popout_question is set
+            if self.player.popout_question == "Have you ever seen this place?":
+                return ["popout_question"]
             if self.player.popout_question == "Yes":
                 return ["popout_question", "more_experience"]
             elif self.player.popout_question == "No":
                 return ["popout_question", "consider_visited"]
         return []
 
-
     def before_next_page(self):
         self.player.time_popout_end = "Recorded when user submits the page"
 
     def vars_for_template(self):
         return {
-            'selected_image': self.player.selected_image,
-            'popout_instruction': "Please interact with the popout question before proceeding."
+            "selected_image": self.player.selected_image,
+            "popout_instruction": "Please interact with the popout question before proceeding."
         }
 
 class ScreenSizePage(Page):
     form_model = Player
     form_fields = []  # No fields for direct user input
 
-    def js_vars(player: 'Player'):
+    def js_vars(player: Player):
         return {}
 
 
