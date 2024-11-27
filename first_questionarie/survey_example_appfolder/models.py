@@ -31,12 +31,6 @@ class Subsession(BaseSubsession):
             p.image_question = selected["question"]  # Assign the corresponding question
             p.choices = selected["choices"]  # Assign the choices for the popout question
 
-            # Ensure popout_question is set based on selected_image
-            if p.selected_image == "img1.png":
-                p.popout_question = "What emotions does this image evoke in you?"
-            elif p.selected_image == "img2.png":
-                p.popout_question = "Have you ever seen this place?"
-
 class Group(BaseGroup):
     #we will only come to the group class when we look at advanced methods
     pass

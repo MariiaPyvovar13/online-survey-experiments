@@ -15,42 +15,50 @@ class DemoPage(Page):
     form_model = Player
     form_fields = ["age_question", "study_field", "rating", "agreemen_quest"]
 
-
 class ImagePage(Page):
     form_model = Player
-    def get_form_fields(self):
-        if self.player.selected_image == "img1.png":
-            return ["popout_reason"]  # Dropdown for emotions
-        else:
-            return ["popout_question"]  # Yes/No question for img2
+    form_fields = ["popout_reason", "popout_question"]
+# class ImagePage(Page):
+#     form_model = Player
+#     def get_form_fields(self):
+#         if self.player.selected_image == "img1.png":
+#             return ["popout_reason"]  # Dropdown for emotions
+#         else:
+#             return ["popout_question"]  # Yes/No question for img2
 
 
 
 class PopoutPage(Page):
     form_model = Player
+    form_fields = ["popout_reason",
+                   "popout_response",
+                   "popout_question",
+                   "popout_question",
+                   "more_experience",
+                   "consider_visited"]
 
-    def get_form_fields(self):
+   # def get_form_fields(self):
 
-        if self.player.selected_image == "img1.png":
-            return ["popout_reason", "popout_response"]
-        elif self.player.selected_image == "img2.png":
-            # Make sure popout_question is set
-            if self.player.popout_question == "Have you ever seen this place?":
-                return ["popout_question"]
-            if self.player.popout_question == "Yes":
-                return ["popout_question", "more_experience"]
-            elif self.player.popout_question == "No":
-                return ["popout_question", "consider_visited"]
-        return []
+    #    if self.player.selected_image == "img1.png":
+      #      return ["popout_reason", "popout_response"]
+     #   elif self.player.selected_image == "img2.png":
+       #     # Make sure popout_question is set
+        #    if self.player.popout_question == "Have you ever seen this place?":
+         #       return ["popout_question"]
+          #  if self.player.popout_question == "Yes":
+           #     return ["popout_question", "more_experience"]
+         #   elif self.player.popout_question == "No":
+          #      return ["popout_question", "consider_visited"]
+      #  return []
 
-    def before_next_page(self):
-        self.player.time_popout_end = "Recorded when user submits the page"
+ #   def before_next_page(self):
+  #      self.player.time_popout_end = "Recorded when user submits the page"
 
-    def vars_for_template(self):
-        return {
-            "selected_image": self.player.selected_image,
-            "popout_instruction": "Please interact with the popout question before proceeding."
-        }
+   # # def vars_for_template(self):
+   #      return {
+   #          "selected_image": self.player.selected_image,
+   #          "popout_instruction": "Please interact with the popout question before proceeding."
+   #      }
 
 class ScreenSizePage(Page):
     form_model = Player
