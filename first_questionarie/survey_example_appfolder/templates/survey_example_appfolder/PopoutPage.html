@@ -4,13 +4,24 @@
 {% block content %}
     {% if player.selected_image == "img1.png" %}
         {{ formfield "popout_reason" }}
-        <div id="answer"></div>
+
+        <div id="popout_response">
+            {{ formfield "popout_response" }}
+        </div>
+
 
     {% elif player.selected_image == "img2.png" %}
-        <h2>Have you ever seen this place?</h2>
         {{ formfield "popout_question" }}
         {{ formfield_errors "popout_question" }}
-        {{ player.image_question }}
+
+        <div id="more_experience" style="display: none">
+            {{ formfield "more_experience" }}
+        </div>
+
+        <div id="consider_visited" style="display: none">
+            {{ formfield "consider_visited" }}
+        </div>
+
     {% endif %}
     </div>
 
@@ -20,13 +31,55 @@
 
 {% block app_scripts %}
     <script>
-        function popout() {
-            console.log(document.getElementById('id_popout_reason')?.value);
+
+        // Handling popout question for the img1.png
+        let popout_reason = document.getElementById("id_popout_reason");
+        let popout_response = document.getElementById("popout_response");
+        handlePopOutResponseDisplay1();
+
+        if (popout_reason) {
+            popout_reason.addEventListener("change", function () {
+                    handlePopOutResponseDisplay1()
+                }
+            )
+        }
+
+        function handlePopOutResponseDisplay1() {
+            if (popout_reason) {
+                if (popout_reason.value) {
+                    popout_response.style.display = "block";
+                } else {
+                    popout_response.style.display = "none";
+                }
+            }
+        }
+
+        // Handling popout question for the img2.png
+        let popout_question = document.getElementById("id_popout_question");
+        let more_experience = document.getElementById("more_experience");
+        let consider_visited = document.getElementById("consider_visited");
+        handlePopOutResponseDisplay2()
+        if (popout_question) {
+            popout_question.addEventListener("change", function () {
+                    handlePopOutResponseDisplay2()
+                }
+            )
+        }
+
+        function handlePopOutResponseDisplay2() {
+            if (popout_question?.value === "Yes") {
+                more_experience.style.display = "block";
+                consider_visited.style.display = "none";
+
+            } else if (popout_question?.value === "No") {
+                consider_visited.style.display = "block";
+                more_experience.style.display = "none";
+            }
         }
 
         // TIME: we are going to write the time the participant entered the page to a variable
         var time = new Date(); //creates the current time
         var time = time.toISOString(); //to.ISOString() ensures we get miliseconds
-        document.getElementById("time_popout").value = time;
+        //document.getElementById("time_popout").value = time;
     </script>
 {% endblock %}

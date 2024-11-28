@@ -27,7 +27,7 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             # Randomly assign one image and its question to each player
             selected = random.choice(img_and_question) # Randomly assign one image
-            p.selected_image = selected["image"]  # Assign the selected image to the player
+            p.selected_image = selected["image"] # Assign the selected image to the player
             p.image_question = selected["question"]  # Assign the corresponding question
             p.choices = selected["choices"]  # Assign the choices for the popout question
 
@@ -79,7 +79,7 @@ class Player(BasePlayer):
     popout_question = models.StringField(
         label="Have you ever seen this place?",
         choices=["Yes", "No"],
-        blank = True
+        blank=True
     )
 
     more_experience = models.StringField(
@@ -99,6 +99,3 @@ class Player(BasePlayer):
     # Screen size
     screen_width = models.IntegerField(initial=-999, label="Screen width")
     screen_height = models.IntegerField(initial=-999, label="Screen height")
-
-
-
