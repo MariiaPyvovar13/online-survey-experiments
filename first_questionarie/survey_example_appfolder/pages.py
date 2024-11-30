@@ -5,11 +5,21 @@ from .models import Constants, Player
 #This is the pages.py file. Here we structure how our pages and pagesequence function.
 #Each page has its own class where you always specify form_model = Player as we have players for each page
 #and we have the form_fields in a list which indicate the variables we have on that page. There will be
-#more functionality added here but this is a good start. 
+#more functionality added here but this is a good start.
+
+from survey_example_appfolder.HelperFunctions import detect_screenout, detect_quota
 
 class Welcome(Page):
     form_model = Player
     form_fields = ["entry_question"]
+
+    def before_next_page(self):
+        # here we are increasing the counter for each player that goes past the Welcome Page
+        self.group.counter += 1
+
+        # we want to detect all the screenouts and the quota reached right away
+        detect_screenout(self)
+        detect_quota(self)
 
 class DemoPage(Page):
     form_model = Player
@@ -71,6 +81,11 @@ class ScreenSizePage(Page):
 class EndPage(Page):
     #style: this is a good example of the style 'CamelCase' that one normally uses for classes
     form_model = Player
+
+
+class RedirectPage(Page):
+    form_model = Player
+
 
 #Here we define in which ordering we want the pages to be shown. We always start with a Welcome page and end with an End page.
 page_sequence = [Welcome,
