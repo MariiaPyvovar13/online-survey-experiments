@@ -77,4 +77,5 @@ page_sequence = [Welcome,
                 DemoPage,
                 ImagePage,
                 PopoutPage,
-                EndPage]
+                EndPage,
+                RedirectPage]
