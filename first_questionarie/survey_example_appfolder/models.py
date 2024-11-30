@@ -32,9 +32,8 @@ class Subsession(BaseSubsession):
             p.choices = selected["choices"]  # Assign the choices for the popout question
 
 class Group(BaseGroup):
-    #we will only come to the group class when we look at advanced methods
-    pass
-
+    def increment_counter(self):
+        self.group.counter += 1
 
 class Player(BasePlayer):
     #this is the most important feature of this file. We can collect all the variables used on the html pages here
@@ -91,6 +90,8 @@ class Player(BasePlayer):
         label="It’s beautiful, isn’t it? Have you considered visiting?",
         blank=True
     )
+
+    gender = models.IntegerField(initial=-999, label="Gender")
 
     # Popout question
     time_popout = models.StringField(initial="")

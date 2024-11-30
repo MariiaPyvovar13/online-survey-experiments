@@ -1,29 +1,35 @@
 from otree.api import Currency as c, currency_range, safe_json
 from ._builtin import Page, WaitPage
 from .models import Constants, Player
+from survey_example_appfolder.HelperFunctions import detect_screenout, detect_quota
 
 #This is the pages.py file. Here we structure how our pages and pagesequence function.
 #Each page has its own class where you always specify form_model = Player as we have players for each page
 #and we have the form_fields in a list which indicate the variables we have on that page. There will be
 #more functionality added here but this is a good start.
 
-from survey_example_appfolder.HelperFunctions import detect_screenout, detect_quota
+
 
 class Welcome(Page):
     form_model = Player
     form_fields = ["entry_question"]
 
-    def before_next_page(self):
-        # here we are increasing the counter for each player that goes past the Welcome Page
-        self.group.counter += 1
-
-        # we want to detect all the screenouts and the quota reached right away
-        detect_screenout(self)
-        detect_quota(self)
+    # def before_next_page(self):
+    #     # here we are increasing the counter for each player that goes past the Welcome Page
+    #     self.group.counter += 1
+    #
+    #     # we want to detect all the screenouts and the quota reached right away
+    #     detect_screenout(self)
+    #     detect_quota(self)
 
 class DemoPage(Page):
     form_model = Player
-    form_fields = ["age_question", "study_field", "rating", "agreemen_quest"]
+    form_fields = ["gender", "age_question", "study_field", "rating", "agreemen_quest"]
+
+    # def is_displayed(self):
+    #     # Example quota logic: stop showing if Male count reaches 50
+    #     male_count = self.subsession.player_set.filter(gender="Male").count()
+    #     return male_count < 50
 
 class ImagePage(Page):
     form_model = Player
