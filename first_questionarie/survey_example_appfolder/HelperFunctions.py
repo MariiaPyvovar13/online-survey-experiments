@@ -27,7 +27,7 @@ def detect_screenout(self):
     '''this function will check for characteristics a participant needs to 
     take part in the survey, (f.e. a certain age or being eligible to vote)'''
 
-    if self.player.eligible_question == 2: # screen out anybody that is not eligible
+    if self.player.agreemen_quest == 2: # screen out anybody that disagreed to the terms
         self.player.screenout = 1
 
 def detect_quota(self):

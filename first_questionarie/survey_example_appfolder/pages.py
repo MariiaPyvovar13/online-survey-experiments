@@ -14,13 +14,13 @@ class Welcome(Page):
     form_model = Player
     form_fields = ["entry_question"]
 
-    # def before_next_page(self):
-    #     # here we are increasing the counter for each player that goes past the Welcome Page
-    #     self.group.counter += 1
-    #
-    #     # we want to detect all the screenouts and the quota reached right away
-    #     detect_screenout(self)
-    #     detect_quota(self)
+    def before_next_page(self):
+        # here we are increasing the counter for each player that goes past the Welcome Page
+        self.group.counter += 1
+
+        # we want to detect all the screenouts and the quota reached right away
+        detect_screenout(self)
+        detect_quota(self)
 
 class DemoPage(Page):
     form_model = Player

@@ -32,8 +32,7 @@ class Subsession(BaseSubsession):
             p.choices = selected["choices"]  # Assign the choices for the popout question
 
 class Group(BaseGroup):
-    def increment_counter(self):
-        self.group.counter += 1
+    counter = models.IntegerField(initial = 0)
 
 class Player(BasePlayer):
     #this is the most important feature of this file. We can collect all the variables used on the html pages here
