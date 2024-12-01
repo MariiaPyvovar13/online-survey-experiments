@@ -33,6 +33,11 @@ class Subsession(BaseSubsession):
 
 class Group(BaseGroup):
     counter = models.IntegerField(initial = 0)
+    male_count = models.IntegerField(initial=0)  # Tracks males
+    female_count = models.IntegerField(initial=0)  # Tracks females
+    male_quota = models.IntegerField(initial=1)  # Limit for males
+    female_quota = models.IntegerField(initial=1)  # Limit for females
+
 
 class Player(BasePlayer):
     #this is the most important feature of this file. We can collect all the variables used on the html pages here
@@ -55,9 +60,8 @@ class Player(BasePlayer):
                                          "4",
                                          "5"],
                                          required=True)
-    agreemen_quest = models.BooleanField(label="Do you agree that your answers will be used in future research?",
-                                         choices=[(True, "Yes"), (False, "No")],
-                                         required=True)
+
+    agreemen_quest = models.IntegerField(initial=-999, label="Agreement")
 
     # Selecting image
     selected_image = models.StringField()
@@ -90,7 +94,10 @@ class Player(BasePlayer):
         blank=True
     )
 
-    gender = models.IntegerField(initial=-999, label="Gender")
+    gender = models.IntegerField(initial=-999, label="Gender", required=True)
+
+    screenout = models.BooleanField(initial=0)
+    quota = models.BooleanField(initial=0)
 
     # Popout question
     time_popout = models.StringField(initial="")

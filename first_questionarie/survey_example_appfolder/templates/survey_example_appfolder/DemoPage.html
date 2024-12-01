@@ -1,6 +1,29 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
 
+{% block scripts %}
+<script>
+    window.onload = function () {
+
+//import variables
+var screenout = {{ screenout }}; //screenout boolean
+var quota = {{ quota }}; //quota boolean
+var label = {{ participant_label }}; //m or tic number
+
+var url_screenout = "/static/ScreenoutLink.html";
+var url_quota = "/static/QuotaFullLink.html";
+
+console.log("Quota:", quota)
+console.log("Screeout:", screenout);
+
+if (screenout==1) {window.location.replace(url_screenout);}
+if (quota == 1) {window.location.replace(url_quota);}
+}
+
+
+</script>
+{% endblock %}
+
 
 {% block title %}
 {% endblock %}
@@ -11,21 +34,21 @@
     <hr>
     Answer the following questions, please.
 
-    <!-- This is the most basic way of implementing an input field -->
+
 <p><b>Which gender do you identify with?</b></p>
 <input type="radio" name="gender" value="1" /> Male
 <br>
 <input type="radio" name="gender" value="2" /> Female
 <br>
-<input type="radio" name="gender" value="3" /> Divers
-<br>
-<input type="radio" name="gender" value="4" /> Prefer not to say
+<input type="radio" name="gender" value="3" /> Prefer not to say
 <br>
 <br>
+
     {{ formfield "age_question"}}
     {{ formfield "study_field"}}
-    {{ formfield "rating"}} 
-    {{ formfield "agreemen_quest"}}
+    {{ formfield "rating"}}
+
+<p><b>Do you agree that your answers will be used in future research?</b></p>
 <input type="radio" name="eligible_question" value="1" class="persist"/> Yes
 <br>
 <input type="radio" name="eligible_question" value="2" class="persist"/> No

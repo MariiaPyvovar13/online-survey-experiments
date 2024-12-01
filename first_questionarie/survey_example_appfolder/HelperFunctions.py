@@ -31,12 +31,21 @@ def detect_screenout(self):
         self.player.screenout = 1
 
 def detect_quota(self):
-    '''this function will check if a quota is already filled'''
-    participant_number = self.group.counter
-    #declare quota reached if we have more than 1 participant that started
-    if participant_number > 1:
-        self.player.quota = 1
-    return None
+    # Gender quotas
+    male_quota = 1
+    female_quota = 1
+
+    # Update group counters based on gender
+    if self.player.gender == 1:  # Male
+        if self.group.male_count >= male_quota:
+            self.player.quota = 1  # Quota reached for males
+        else:
+            self.group.male_count += 1  # Increment male count
+    elif self.player.gender == 2:  # Female
+        if self.group.female_count >= female_quota:
+            self.player.quota = 1  # Quota reached for females
+        else:
+            self.group.female_count += 1  # Increment female count
 
 # def participant_count(self):
 #     '''if we want to count different things we might also implement a function here.
