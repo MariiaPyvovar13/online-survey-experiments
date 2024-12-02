@@ -30,6 +30,9 @@ def detect_screenout(self):
     if self.player.agreemen_quest == 2: # screen out anybody that disagreed to the terms
         self.player.screenout = 1
 
+    elif self.player.age >= 40:  # Screen out if age is 40 or above
+        self.player.screenout = 1
+
 def detect_quota(self):
     # Gender quotas
     male_quota = 1

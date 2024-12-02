@@ -16,7 +16,7 @@ class Welcome(Page):
 
 class DemoPage(Page):
     form_model = Player
-    form_fields = ["gender", "age_question", "study_field", "rating"]
+    form_fields = ["gender", "age_question", "study_field", "rating", "agreemen_quest"]
 
     def before_next_page(self):
         # here we are increasing the counter for each player that goes past the Welcome Page
@@ -26,11 +26,6 @@ class DemoPage(Page):
         detect_screenout(self)
         detect_quota(self)
 
-    def vars_for_template(self):
-        return {"participant_label": safe_json(self.participant.label),
-                "screenout": safe_json(self.player.screenout),
-                "quota": safe_json(self.player.quota),
-        }
 
     # def is_displayed(self):
     #     # Example quota logic: stop showing if Male count reaches 50
@@ -41,6 +36,11 @@ class ImagePage(Page):
     form_model = Player
     form_fields = ["popout_reason", "popout_question"]
 
+    def vars_for_template(self):
+        return {"participant_label": safe_json(self.participant.label),
+                "screenout": safe_json(self.player.screenout),
+                "quota": safe_json(self.player.quota),
+        }
 
 
 class PopoutPage(Page):

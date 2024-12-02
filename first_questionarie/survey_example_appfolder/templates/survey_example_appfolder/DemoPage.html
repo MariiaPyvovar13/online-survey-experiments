@@ -1,30 +1,6 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
 
-{% block scripts %}
-<script>
-    window.onload = function () {
-
-//import variables
-var screenout = {{ screenout }}; //screenout boolean
-var quota = {{ quota }}; //quota boolean
-var label = {{ participant_label }}; //m or tic number
-
-var url_screenout = "/static/ScreenoutLink.html";
-var url_quota = "/static/QuotaFullLink.html";
-
-console.log("Quota:", quota)
-console.log("Screeout:", screenout);
-
-if (screenout==1) {window.location.replace(url_screenout);}
-if (quota == 1) {window.location.replace(url_quota);}
-}
-
-
-</script>
-{% endblock %}
-
-
 {% block title %}
 {% endblock %}
 
@@ -35,7 +11,7 @@ if (quota == 1) {window.location.replace(url_quota);}
     Answer the following questions, please.
 
 
-<p><b>Which gender do you identify with?</b></p>
+<p>Which gender do you identify with?</p>
 <input type="radio" name="gender" value="1" /> Male
 <br>
 <input type="radio" name="gender" value="2" /> Female
@@ -44,14 +20,18 @@ if (quota == 1) {window.location.replace(url_quota);}
 <br>
 <br>
 
-    {{ formfield "age_question"}}
+<p>Your age</p>
+<input type="number" name="age" min="0" max="120" required />
+
+    {{ formfield_errors "age_question" }}
+{#    {{ formfield "age_question"}}#}
     {{ formfield "study_field"}}
     {{ formfield "rating"}}
 
-<p><b>Do you agree that your answers will be used in future research?</b></p>
-<input type="radio" name="eligible_question" value="1" class="persist"/> Yes
+<p>Do you agree that your answers will be used in future research?</p>
+<input type="radio" name="agreemen_quest" value="1" class="persist"/> Yes
 <br>
-<input type="radio" name="eligible_question" value="2" class="persist"/> No
+<input type="radio" name="agreemen_quest" value="2" class="persist"/> No
 <br>
 
    <button class="otree-btn-next btn btn-primary next-button otree-next-button">

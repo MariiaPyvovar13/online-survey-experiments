@@ -1,6 +1,32 @@
 {% extends "global/Page.html" %}
 {% load otree %}
 
+{% block scripts %}
+<script>
+    window.onload = function () {
+
+//import variables
+var screenout = {{ screenout }}; //screenout boolean
+var quota= {{ quota }}; //quota boolean
+var label = {{ participant_label }}; //m or tic number
+        console.log(screenout);
+
+var url_screenout = "/static/ScreenoutLink.html";
+var url_quota = "/static/QuotaFullLink.html";
+
+console.log("Quota:", quota)
+console.log("Screenout:", screenout);
+
+
+if (screenout==1) {window.location.replace(url_screenout);}
+if (quota == 1) {window.location.replace(url_quota);}
+}
+
+
+</script>
+{% endblock %}
+
+
 {% block content %}
 
     <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">

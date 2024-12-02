@@ -44,7 +44,8 @@ class Player(BasePlayer):
     
 #The Variables are structured on the base of pages
     entry_question = models.StringField(label="Your full name", required=True)
-    age_question = models.IntegerField(label="Full age", required=True)                          
+    # age_question = models.IntegerField(label="Full age", required=True)
+    age_question = models.IntegerField(label="What is your age?")
     study_field = models.StringField(label="What is your field of study?",
                                      choices=["Economics",
                                               "Politics and Administration",
@@ -61,7 +62,7 @@ class Player(BasePlayer):
                                          "5"],
                                          required=True)
 
-    agreemen_quest = models.IntegerField(initial=-999, label="Agreement")
+    agreemen_quest = models.IntegerField()
 
     # Selecting image
     selected_image = models.StringField()
@@ -94,7 +95,7 @@ class Player(BasePlayer):
         blank=True
     )
 
-    gender = models.IntegerField(initial=-999, label="Gender", required=True)
+    gender = models.IntegerField()
 
     screenout = models.BooleanField(initial=0)
     quota = models.BooleanField(initial=0)
