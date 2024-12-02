@@ -20,11 +20,12 @@
 <br>
 <br>
 
-<p>Your age</p>
-<input type="number" name="age" min="0" max="120" required />
+{#<p>Your age</p>#}
+{#<input type="number" name="age" min="0" max="120" required />#}
+{##}
 
-    {{ formfield_errors "age_question" }}
-{#    {{ formfield "age_question"}}#}
+    {{ formfield "age_question"}}
+{#    {{ formfield_errors "age_question" }}#}
     {{ formfield "study_field"}}
     {{ formfield "rating"}}
 
