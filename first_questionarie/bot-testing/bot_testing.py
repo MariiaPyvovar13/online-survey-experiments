@@ -9,11 +9,11 @@ import random
 import string
 
 # this is the session wide link
-link = "http://localhost:8000/join/havorure"
+link = "http://localhost:8000/join/damegoma"
 
 def build_driver():
     # Set up the driver
-    return webdriver.Chrome() #(ChromeDriverManager().install())
+    return webdriver.Chrome()
 
 def check_exists_by_xpath(driver, xpath):
     try:
@@ -22,6 +22,14 @@ def check_exists_by_xpath(driver, xpath):
             return 1
     except NoSuchElementException:
         return 0
+
+def detect_screenout(driver):
+    try:
+        #Try to locate an element that exists on DemoPage_1 return false if found True if not found
+        driver.find_element(By.XPATH, '//*[@id="id_study_field_question"]')
+        return False
+    except NoSuchElementException:
+        return True
 
 def welcome_page(driver):
     # Give input to the entry question - find the element by its id
@@ -33,33 +41,23 @@ def welcome_page(driver):
 
 def demo_page(driver):
     # gender
-    # gender = driver.find_elements(By.NAME, "gender")
-    # rand_selection = random.randint(0, len(gender) - 1)
-    # gender[rand_selection].click()
-    if check_exists_by_xpath(driver, '//*[@name="gender"]'):
-        gender = driver.find_elements(By.NAME, "gender")
-        if len(gender) > 0:
-            rand_selection = random.randint(0, len(gender) - 1)
-            gender[rand_selection].click()
+    gender = driver.find_elements(By.NAME, "gender")
+    rand_selection = random.randint(0, len(gender) - 1)
+    gender[rand_selection].click()
 
     # age
-    xpath = '//*[@id="id_age_question"]'
+    xpath_age = '//*[@id="id_age_question"]'
     age = random.randint(18,40)
-    driver.find_element(By.XPATH, xpath).send_keys(str(age))
+    driver.find_element(By.XPATH, xpath_age).send_keys(str(age))
 
     # study
-    study_field_dropdown = driver.find_element(By.NAME, "study_field")
-    select_study_field = Select(study_field_dropdown)
-    options = select_study_field.options
-    random_option = random.choice(options)  # Randomly choose one option from the dropdown
-    select_study_field.select_by_visible_text(random_option.text)
+    study_fields = ["Economics", "Politics and Administration", "SEDS", "Computer Science", "Linguistics", "Other"]
+    study_field = driver.find_element(By.NAME, "study_field")
+    study_field.send_keys(random.choice(study_fields))
 
     # rating
-    rating_dropdown = driver.find_element(By.NAME, "rating")
-    select_rating = Select(rating_dropdown)
-    options = select_rating.options
-    random_option = random.choice(options)  # Randomly choose one option from the dropdown
-    select_rating.select_by_visible_text(random_option.text)
+    rating_field = driver.find_element(By.NAME, "rating")
+    rating_field.send_keys(random.randint(1, 5))
 
     # agreement question
     agreement = driver.find_elements(By.NAME, "agreemen_quest")
@@ -220,6 +218,10 @@ def run_bots(no_times, link):
             welcome_page(driver)
 
         demo_page(driver) # demo-page(gender, age etc)
+
+        if detect_screenout(driver):
+            print("Screenout detected. Skipping this participant.")
+            continue
         # Check if an extra site is shown and process it if present
         if check_exists_by_xpath(driver, '//*[@id="form"]/div/h3') == 1:
             onlyOneGroup(driver)
