@@ -4,11 +4,12 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 import random
 import string
 
 # this is the session wide link
-link = "http://localhost:8000/join/tavekige"
+link = "http://localhost:8000/join/dujikemu"
 
 def build_driver():
     # Set up the driver
@@ -25,7 +26,7 @@ def check_exists_by_xpath(driver, xpath):
 def welcome_page(driver):
     # Give input to the entry question - find the element by its id
     entry_question_id = "id_entry_question"
-    entry_question_input = "Testing Input for Entry Question"
+    entry_question_input = "Test Name"
     driver.find_element(By.ID, entry_question_id).send_keys(entry_question_input)
     # next button
     driver.find_element(By.XPATH, '//*[@id="form"]/div/button').click()
@@ -38,8 +39,8 @@ def demo_page(driver):
 
     # age
     xpath = "//*[@id='id_age_question']"
-    age = random.randint(1,39)
-    driver.find_element(By.XPATH, xpath).send_keys(str(age))
+    age = random.randint(18,40)
+    driver.find_element(By.XPATH, xpath).send_keys("33")
 
     # study
     study_field_dropdown = driver.find_element(By.NAME, "study_field")
@@ -213,8 +214,10 @@ def run_bots(no_times, link):
         # check if one can do th survey(e.g. if quota is full start page is not shown(in our case 20 participants)
         if check_exists_by_xpath(driver, "//*[@id='id_entry_question']") == 1:
             welcome_page(driver)
+            continue
 
         demo_page(driver) # demo-page(gender, age etc)
+        # continue
 
         if check_exists_by_xpath(driver, "//*[@id='id_popout_reason']"):  # Logic for img1.png
             image_page_img1(driver)
