@@ -1,6 +1,6 @@
 from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -8,7 +8,7 @@ import random
 import string
 
 # this is the session wide link
-link = "http://localhost:8000/join/zevufoja"
+link = "http://localhost:8000/join/tavekige"
 
 def build_driver():
     # Set up the driver
@@ -28,7 +28,7 @@ def welcome_page(driver):
     entry_question_input = "Testing Input for Entry Question"
     driver.find_element(By.ID, entry_question_id).send_keys(entry_question_input)
     # next button
-    driver.find_element(By.XPATH, "//*[@id="form"]/div/button").click()
+    driver.find_element(By.XPATH, '//*[@id="form"]/div/button').click()
 
 def demo_page(driver):
     # gender
@@ -42,18 +42,18 @@ def demo_page(driver):
     driver.find_element(By.XPATH, xpath).send_keys(str(age))
 
     # study
-    study_field_xpath = "//*[@id='id_study_field']"
-    dropdown = Select(driver.find_element(By.XPATH, study_field_xpath))
-    options = dropdown.options
-    random_index = random.randint(0, len(options) - 1)
-    dropdown.select_by_index(random_index)
+    study_field_dropdown = driver.find_element(By.NAME, "study_field")
+    select_study_field = Select(study_field_dropdown)
+    options = select_study_field.options
+    random_option = random.choice(options)  # Randomly choose one option from the dropdown
+    select_study_field.select_by_visible_text(random_option.text)
 
     # rating
-    rating_xpath = "//*[@id='id_rating']"
-    dropdown = Select(driver.find_element(By.XPATH, rating_xpath))
-    options = dropdown.options
-    random_index = random.randint(0, len(options) - 1)
-    dropdown.select_by_index(random_index)
+    rating_dropdown = driver.find_element(By.NAME, "rating")
+    select_rating = Select(rating_dropdown)
+    options = select_rating.options
+    random_option = random.choice(options)  # Randomly choose one option from the dropdown
+    select_rating.select_by_visible_text(random_option.text)
 
     # agreement question
     agreement = driver.find_elements(By.NAME, "agreemen_quest")
@@ -223,9 +223,9 @@ def run_bots(no_times, link):
 
         popout_page(driver)
 
-#       # check if extra site is shown to you shown
-#         if check_exists_by_xpath(driver, '//*[@id="form"]/div/h3') == 1:
-#             onlyOneGroup(driver)
+      # check if extra site is shown to you shown
+        if check_exists_by_xpath(driver, '//*[@id="form"]/div/h3') == 1:
+            onlyOneGroup(driver)
         end_of_survey(driver)
     print("Success!")
 

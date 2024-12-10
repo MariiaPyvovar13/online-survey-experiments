@@ -35,8 +35,8 @@ def detect_screenout(self):
 
 def detect_quota(self):
     # Gender quotas
-    male_quota = 1
-    female_quota = 1
+    male_quota = 10
+    female_quota = 10
 
     # Update group counters based on gender
     if self.player.gender == 1:  # Male
