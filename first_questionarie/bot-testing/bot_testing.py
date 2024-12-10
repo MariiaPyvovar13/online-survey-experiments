@@ -9,7 +9,7 @@ import random
 import string
 
 # this is the session wide link
-link = "http://localhost:8000/join/dujikemu"
+link = "http://localhost:8000/join/havorure"
 
 def build_driver():
     # Set up the driver
@@ -33,14 +33,19 @@ def welcome_page(driver):
 
 def demo_page(driver):
     # gender
-    gender = driver.find_elements(By.NAME, "gender")
-    rand_selection = random.randint(0, len(gender) - 1)
-    gender[rand_selection].click()
+    # gender = driver.find_elements(By.NAME, "gender")
+    # rand_selection = random.randint(0, len(gender) - 1)
+    # gender[rand_selection].click()
+    if check_exists_by_xpath(driver, '//*[@name="gender"]'):
+        gender = driver.find_elements(By.NAME, "gender")
+        if len(gender) > 0:
+            rand_selection = random.randint(0, len(gender) - 1)
+            gender[rand_selection].click()
 
     # age
-    xpath = "//*[@id='id_age_question']"
+    xpath = '//*[@id="id_age_question"]'
     age = random.randint(18,40)
-    driver.find_element(By.XPATH, xpath).send_keys("33")
+    driver.find_element(By.XPATH, xpath).send_keys(str(age))
 
     # study
     study_field_dropdown = driver.find_element(By.NAME, "study_field")
@@ -64,7 +69,6 @@ def demo_page(driver):
     # next
     driver.find_element(By.XPATH, '//*[@id="form"]/div/button').click()
     return rand_selection
-
 
 def image_page_img1(driver):
     """
@@ -214,10 +218,11 @@ def run_bots(no_times, link):
         # check if one can do th survey(e.g. if quota is full start page is not shown(in our case 20 participants)
         if check_exists_by_xpath(driver, "//*[@id='id_entry_question']") == 1:
             welcome_page(driver)
-            continue
 
         demo_page(driver) # demo-page(gender, age etc)
-        # continue
+        # Check if an extra site is shown and process it if present
+        if check_exists_by_xpath(driver, '//*[@id="form"]/div/h3') == 1:
+            onlyOneGroup(driver)
 
         if check_exists_by_xpath(driver, "//*[@id='id_popout_reason']"):  # Logic for img1.png
             image_page_img1(driver)
