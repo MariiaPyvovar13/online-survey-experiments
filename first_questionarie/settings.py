@@ -5,7 +5,7 @@ SESSION_CONFIGS = [
     dict(
         name='survey',
         display_name='First_survey',
-        num_demo_participants=10,
+        num_demo_participants=20,
         app_sequence=['survey_example_appfolder'],
     ),
 ]

@@ -41,12 +41,12 @@ def detect_quota(self):
     # Update group counters based on gender
     if self.player.gender == 1:  # Male
         if self.group.male_count >= male_quota:
-            self.player.quota = 1  # Quota reached for males
+            self.player.quota = 10  # Quota reached for males
         else:
             self.group.male_count += 1  # Increment male count
     elif self.player.gender == 2:  # Female
         if self.group.female_count >= female_quota:
-            self.player.quota = 1  # Quota reached for females
+            self.player.quota = 10  # Quota reached for females
         else:
             self.group.female_count += 1  # Increment female count
 
