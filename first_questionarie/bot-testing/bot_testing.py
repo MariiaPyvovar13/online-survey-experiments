@@ -9,7 +9,7 @@ import random
 import string
 
 # this is the session wide link
-link = "http://localhost:8000/join/damegoma"
+link = "http://localhost:8000/join/rujejaku"
 
 def build_driver():
     # Set up the driver
@@ -60,11 +60,17 @@ def demo_page(driver):
     rating_field.send_keys(random.randint(1, 5))
 
     # agreement question
-    agreement = driver.find_elements(By.NAME, "agreemen_quest")
+    agreement = driver.find_elements(By.NAME, 'agreemen_quest')
     rand_selection = random.randint(0, len(agreement) - 1)
-    agreement[rand_selection].click()
+    # Scroll to the element
 
-    # next
+    driver.execute_script("arguments[0].scrollIntoView();", agreement[rand_selection])
+    
+    # Wait for the element to become clickable
+
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'agreemen_quest')))
+
+    agreement[rand_selection].click()
     driver.find_element(By.XPATH, '//*[@id="form"]/div/button').click()
     return rand_selection
 
@@ -217,8 +223,12 @@ def run_bots(no_times, link):
         if check_exists_by_xpath(driver, "//*[@id='id_entry_question']") == 1:
             welcome_page(driver)
 
-        demo_page(driver) # demo-page(gender, age etc)
-
+            
+        x = demo_page(driver) # demo-page(gender, age etc)
+        if x == 2:
+            print("Participant disqualified due to agreement response.")
+            continue
+            
         if detect_screenout(driver):
             print("Screenout detected. Skipping this participant.")
             continue

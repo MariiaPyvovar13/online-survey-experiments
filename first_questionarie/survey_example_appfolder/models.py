@@ -45,6 +45,7 @@ class Player(BasePlayer):
 #The Variables are structured on the base of pages
     entry_question = models.StringField(label="Your full name", required=True)
     # age_question = models.IntegerField(label="Full age", required=True)
+    gender = models.IntegerField()
     age_question = models.IntegerField(label="What is your age?")
     study_field = models.StringField(label="What is your field of study?",
                                      choices=["Economics",
