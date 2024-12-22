@@ -71,7 +71,10 @@ def demo_page(driver):
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME, 'agreemen_quest')))
 
     agreement[rand_selection].click()
-    driver.find_element(By.XPATH, '//*[@id="form"]/div/button').click()
+
+    driver.execute_script("arguments[0].click();", driver.find_element(By.XPATH, '//*[@id="form"]/div/button'))
+
+    #driver.find_element(By.XPATH, '//*[@id="form"]/div/button').click()
     return rand_selection
 
 def image_page_img1(driver):
